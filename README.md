@@ -90,5 +90,86 @@ From a business risk perspective:
 
 Leaving these enabled could:
 - Violate compliance frameworks
-- Expose sensitive traf
+- Expose sensitive traffic
+- Create audit and legal exposure
+
+As a result, **TLS 1.0 and TLS 1.1 were fully disabled at the operating system level**.
+
+---
+
+## Why SSL Certificate Findings Were NOT Immediately Remediated
+
+### This Was a Deliberate Decision
+The scan also reported:
+- Self-signed certificates
+- Certificates that could not be externally trusted
+
+While these findings appear serious, context matters.
+
+---
+
+### Business Reasoning
+In this environment:
+- The certificates were used internally
+- No public-facing customer services relied on them
+- No sensitive data was being transmitted externally using these certificates
+
+Remediating certificates would have:
+- Required architectural changes
+- Introduced potential service disruption
+- Delivered **minimal risk reduction** compared to other actions
+
+---
+
+### Risk-Based Conclusion
+The SSL findings were:
+- Documented
+- Acknowledged
+- Accepted as **lower priority risk**
+
+This demonstrates:
+- Prioritization based on **impact**, not scan severity alone
+- Alignment with how banks manage risk without disrupting operations
+
+---
+
+## Validation & Results
+After remediation:
+- Network exposure was significantly reduced
+- Deprecated encryption protocols were fully removed
+- Follow-up credentialed scans confirmed remediation success
+- No operational downtime occurred
+
+---
+
+## Regulatory & Compliance Alignment
+Actions taken align with expectations from:
+- PCI DSS (secure communications)
+- NIST security frameworks
+- FFIEC guidance for financial institutions
+- ISO/IEC 27001 vulnerability management principles
+
+More importantly, they align with **how banks actually balance security and business continuity**.
+
+---
+
+## Key Takeaways
+- Not all findings are equal
+- Exposure matters more than volume
+- Risk must be reduced without breaking the business
+- Good vulnerability management is about **judgment**, not just fixes
+
+---
+
+## Final Outcome
+This engagement:
+- Eliminated unnecessary external exposure
+- Reduced cryptographic risk
+- Demonstrated real-world prioritization
+- Reflected how vulnerability management is performed in regulated environments
+
+---
+
+*This project showcases practical vulnerability management decision-making expected of analysts supporting financial institutions.*
+
 
