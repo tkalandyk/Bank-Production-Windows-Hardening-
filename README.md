@@ -1,157 +1,94 @@
-# Bank Production Windows Hardening – Credentialed Vulnerability Remediation
-
-## Project Overview
-This project simulates a real-world **banking environment vulnerability management workflow**.  
-The objective was to identify, remediate, and validate security weaknesses on a Windows production system using **credentialed vulnerability scanning**, **network access controls**, and **operating system hardening**.
-
-The focus of this engagement was **reducing cryptographic risk and external exposure**, two areas that are heavily scrutinized in regulated financial environments.
+# Bank Production Windows Hardening  
+## Risk-Based Vulnerability Management & Network Exposure Reduction
 
 ---
 
-## Business Context (Why This Matters)
-Financial institutions are frequent targets for:
+## Executive Summary
+This project demonstrates how a **misconfigured cloud system and outdated security settings**, if left unaddressed, could expose a financial institution to **millions of dollars in potential loss**, regulatory scrutiny, and reputational damage.
+
+Rather than remediating everything blindly, this engagement focused on:
+- Identifying **what posed the greatest business risk**
+- Fixing **what could realistically lead to a breach**
+- Deferring lower-impact issues that did **not materially increase exposure**
+
+This is how vulnerability management works in real banking environments.
+
+---
+
+## Business Context (Why Leadership Should Care)
+Banks operate under constant threat from:
+- Unauthorized access
 - Credential abuse
-- Lateral movement
-- Weak cryptographic configurations
-- Compliance violations
+- Regulatory audits
+- Public trust erosion
 
-Even configuration-level weaknesses — such as deprecated TLS protocols — can:
-- Violate regulatory requirements
-- Increase breach impact
-- Lead to audit findings
-- Expose customer data
+In this case, two major risk areas were identified:
+1. **Severely misconfigured network access controls**
+2. **Outdated encryption protocols still enabled**
 
-This project demonstrates how **small, targeted changes** significantly reduce risk while maintaining business functionality.
+Either issue alone could lead to a serious incident.  
+Together, they significantly increased the likelihood of compromise.
 
 ---
 
-## Scope of Work
-- Environment: Azure-hosted Windows 11 virtual machine
-- Scan Type: **Credentialed vulnerability scan**
-- Scanner Access: Restricted to a known internal scanner IP
-- Objective:
-  - Identify insecure cryptographic protocols
-  - Remediate OS-level vulnerabilities
-  - Validate fixes through rescanning
-  - Maintain least-privilege network access
+## Critical Finding #1: Network Security Group (NSG) Misconfiguration
+
+### What Was Wrong
+The system was deployed with inbound network rules that:
+- Allowed remote administrative access from **anywhere on the internet**
+- Did not restrict who could attempt to connect
+- Effectively exposed the system to continuous scanning and brute-force attempts
+
+This is equivalent to:
+> Leaving a bank’s back-office systems reachable from the public street.
 
 ---
 
-## Initial Findings (Pre-Remediation)
-The initial scan identified the following **Medium-severity findings**:
+### Why This Is Dangerous (Non-Technical Explanation)
+An open management port:
+- Gives attackers unlimited chances to guess credentials
+- Enables automated attack tools to operate 24/7
+- Increases the probability of account compromise over time
 
-- TLS Version 1.0 Protocol Enabled
-- TLS Version 1.1 Deprecated Protocol Enabled
-- SSL Certificate Cannot Be Trusted
-- SSL Self-Signed Certificate
+Even if passwords are strong, **constant exposure multiplies risk**.
 
-From a banking risk perspective, **TLS 1.0 and 1.1 posed the highest concern**, as they:
-- Are cryptographically weak
-- Are explicitly disallowed by modern security standards
-- Increase exposure to downgrade and interception attacks
-
----
-
-## Risk Assessment
-The presence of deprecated TLS protocols represents:
-- **Confidentiality risk** to encrypted communications
-- **Regulatory non-compliance**
-- **Increased attack surface** for man-in-the-middle techniques
-
-In regulated environments, these configurations are typically classified as:
-- High audit priority
-- Required remediation items
-- Policy violations if left unaddressed
+In regulated environments, this type of configuration is often flagged as:
+- A **high-risk audit finding**
+- A **policy violation**
+- An unacceptable external attack surface
 
 ---
 
-## Remediation Actions Taken
+### What Was Done
+Inbound access was redesigned to follow **least privilege principles**:
+- Administrative access limited to a **single trusted IP**
+- Vulnerability scanning allowed only from a **known internal scanner**
+- All other inbound traffic explicitly denied by default
 
-### 1. Network Security Group (NSG) Hardening
-Inbound access was restricted to:
-- Administrative RDP access from a single trusted IP
-- Credentialed scanner access from an internal scanner IP
-
-All other inbound traffic remained **explicitly denied by default**.
-
-This enforced:
-- Least privilege network access
-- Reduced external attack surface
-- Separation of management and scanning traffic
+This immediately:
+- Reduced exposure
+- Lowered attack probability
+- Brought the system closer to regulatory expectations
 
 ---
 
-### 2. Operating System Hardening (SCHANNEL)
-Deprecated cryptographic protocols were disabled at the OS level using Windows SCHANNEL configuration:
+## Critical Finding #2: Outdated Encryption Protocols (TLS 1.0 / 1.1)
 
-- TLS 1.0 – Disabled (Server-side)
-- TLS 1.1 – Disabled (Server-side)
-
-This ensures:
-- The system cannot negotiate insecure encryption
-- Applications inherit secure defaults
-- Configuration persists across reboots
-
-A system restart was performed to fully apply changes.
+### What Was Found
+The system still supported older encryption methods that:
+- Are no longer considered secure
+- Are explicitly disallowed by modern banking standards
+- Increase the risk of data interception
 
 ---
 
-## Validation & Verification
-After remediation:
-- A **follow-up credentialed vulnerability scan** was executed
-- TLS 1.0 and TLS 1.1 findings were **fully remediated**
-- No regressions or service disruption were observed
+### Why TLS Was Prioritized
+From a business risk perspective:
+- Encryption protects **customer data and credentials**
+- Weak encryption undermines **trust and compliance**
+- Regulators expect outdated protocols to be disabled
 
-Remaining findings were reviewed and categorized as:
-- Informational (expected in credentialed scans)
-- Low risk
-- Accepted risk pending future architectural changes
+Leaving these enabled could:
+- Violate compliance frameworks
+- Expose sensitive traf
 
----
-
-## Regulatory & Compliance Alignment
-This remediation aligns with common financial industry requirements, including:
-
-- **PCI DSS**
-  - Requirement 4: Strong cryptography and secure protocols
-- **NIST SP 800-52**
-  - Guidelines for TLS usage
-- **NIST SP 800-53**
-  - System and communications protection controls
-- **FFIEC Cybersecurity Assessment Tool**
-  - Secure configuration management
-- **ISO/IEC 27001**
-  - Technical vulnerability management
-
-Disabling deprecated TLS protocols is a **baseline expectation** for regulated financial systems.
-
----
-
-## Key Takeaways
-- Vulnerability management is not just scanning — it is **risk-based decision making**
-- Credentialed scans provide deep visibility but require careful interpretation
-- Small configuration changes can eliminate significant compliance risk
-- Validation is as important as remediation
-
----
-
-## Skills Demonstrated
-- Credentialed vulnerability analysis
-- Risk prioritization in regulated environments
-- OS-level hardening
-- Network access control design
-- Remediation validation
-- Security documentation and reporting
-
----
-
-## Final Outcome
-This project successfully:
-- Reduced cryptographic attack surface
-- Improved compliance posture
-- Demonstrated a repeatable vulnerability management workflow
-- Maintained operational stability
-
----
-
-*This project reflects real-world vulnerability management practices expected in financial institutions and regulated enterprises.*
