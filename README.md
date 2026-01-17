@@ -1,3 +1,7 @@
+
+<img width="1536" height="1024" alt="ChatGPT Image Jan 16, 2026, 07_14_00 PM" src="https://github.com/user-attachments/assets/89db7596-85f9-42dc-ba4c-6d7f9126e3ed" />
+
+
 # Bank Production Windows Hardening  
 ## Risk-Based Vulnerability Management & Network Exposure Reduction
 
@@ -171,5 +175,4 @@ This engagement:
 ---
 
 *This project showcases practical vulnerability management decision-making expected of analysts supporting financial institutions.*
-
 
