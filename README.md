@@ -15,7 +15,6 @@ Rather than remediating everything blindly, this engagement focused on:
 - Fixing **what could realistically lead to a breach**
 - Deferring lower-impact issues that did **not materially increase exposure**
 
-This is how vulnerability management works in real banking environments.
 
 ---
 
@@ -35,20 +34,24 @@ Together, they significantly increased the likelihood of compromise.
 
 ---
 
-## Critical Finding #1: Network Security Group (NSG) Misconfiguration
+## Critical Finding #1: Network Security Group (NSG) Extremely Misconfigured
 
 ### What Was Wrong
 The system was deployed with inbound network rules that:
 - Allowed remote administrative access from **anywhere on the internet**
 - Did not restrict who could attempt to connect
 - Effectively exposed the system to continuous scanning and brute-force attempts
+- As well as an ICMP Protocol that was irrelevant 
+
+<img width="1562" height="305" alt="Screenshot 2026-01-16 at 4 18 46 PM" src="https://github.com/user-attachments/assets/62a63a9b-885c-43f0-b29d-3a5cb6bfed23" />
+
 
 This is equivalent to:
 > Leaving a bank’s back-office systems reachable from the public street.
 
 ---
 
-### Why This Is Dangerous (Non-Technical Explanation)
+### Why This Is Dangerous 
 An open management port:
 - Gives attackers unlimited chances to guess credentials
 - Enables automated attack tools to operate 24/7
@@ -69,6 +72,9 @@ Inbound access was redesigned to follow **least privilege principles**:
 - Vulnerability scanning allowed only from a **known internal scanner**
 - All other inbound traffic explicitly denied by default
 
+  <img width="1012" height="253" alt="Screenshot 2026-01-16 at 5 42 04 PM" src="https://github.com/user-attachments/assets/9f495ac3-a521-4777-8499-c2d71068bc09" />
+
+
 This immediately:
 - Reduced exposure
 - Lowered attack probability
@@ -77,6 +83,12 @@ This immediately:
 ---
 
 ## Critical Finding #2: Outdated Encryption Protocols (TLS 1.0 / 1.1)
+
+<img width="795" height="372" alt="Screenshot 2026-01-16 at 7 25 25 PM" src="https://github.com/user-attachments/assets/65a2e7df-97ed-41be-8f4d-32b230f190b0" />
+
+
+<img width="685" height="548" alt="Screenshot 2026-01-16 at 6 12 48 PM" src="https://github.com/user-attachments/assets/e21a906c-9111-4d3f-892d-e7bfe06b837f" />
+
 
 ### What Was Found
 The system still supported older encryption methods that:
@@ -131,14 +143,18 @@ The SSL findings were:
 - Acknowledged
 - Accepted as **lower priority risk**
 
-This demonstrates:
-- Prioritization based on **impact**, not scan severity alone
-- Alignment with how banks manage risk without disrupting operations
-
 ---
 
 ## Validation & Results
 After remediation:
+
+<img width="797" height="274" alt="Screenshot 2026-01-16 at 7 31 41 PM" src="https://github.com/user-attachments/assets/b04d3ae4-c7de-40ce-9bb5-e93af58cd614" />
+
+
+<img width="610" height="591" alt="TLS" src="https://github.com/user-attachments/assets/524debd0-0c86-4782-9021-51e34bbd2d0b" />
+
+
+
 - Network exposure was significantly reduced
 - Deprecated encryption protocols were fully removed
 - Follow-up credentialed scans confirmed remediation success
