@@ -41,7 +41,7 @@ The system was deployed with inbound network rules that:
 - Allowed remote administrative access from **anywhere on the internet**
 - Did not restrict who could attempt to connect
 - Effectively exposed the system to continuous scanning and brute-force attempts
-- As well as an ICMP Protocol that was irrelevant 
+- As well as an ICMP Protocol rule that was irrelevant 
 
 <img width="1562" height="305" alt="Screenshot 2026-01-16 at 4 18 46 PM" src="https://github.com/user-attachments/assets/62a63a9b-885c-43f0-b29d-3a5cb6bfed23" />
 
